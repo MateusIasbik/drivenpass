@@ -6,8 +6,7 @@ export type UserData = {
 
 export type CredentialData = {
     title: string,
-	url: string,
-	username: string,
-	password: string
+    url: string,
+    username: string,
+    password: string
 };
-

@@ -25,9 +25,9 @@ async function checkEmailExists(userData: UserData) {
     return result !== null;
 }
 
-const usersRepository = {
+const signupRepository = {
     insertUser,
     checkEmailExists
 }
 
-export default usersRepository;
+export default signupRepository;

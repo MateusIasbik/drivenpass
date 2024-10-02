@@ -1,13 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { UserData } from "../protocols";
-import usersService from "../services/users-service";
 import httpStatus from "http-status";
+import signupService from "../services/signup-service";
 
 async function insertUser(req: Request, res: Response, next: NextFunction) {
     const userData: UserData = req.body;
     
     try {
-        await usersService.insertUser(userData);
+        await signupService.insertUser(userData);
         res.sendStatus(httpStatus.CREATED);
 
     } catch (error) {
@@ -15,8 +15,8 @@ async function insertUser(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-const usersController = {
+const signupController = {
     insertUser
 }
 
-export default usersController;
+export default signupController;

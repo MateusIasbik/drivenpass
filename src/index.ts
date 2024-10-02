@@ -1,7 +1,9 @@
 import express, { json, Request, Response } from "express";
 import httpStatus from "http-status";
 import errorHandler from "./middleware/errorHandler-middlewares";
-import usersRouter from "./routes/users-router";
+import signupRouter from "./routes/signup-router";
+import signinRouter from "./routes/signin-router";
+import credentialsRouter from "./routes/credentials-router";
 
 const app = express();
 app.use(json());
@@ -10,7 +12,9 @@ app.get("/health", (req: Request, res: Response) => {
     res.status(httpStatus.OK).send("I'm OK!");
 });
 
-app.use(usersRouter);
+app.use(signupRouter);
+app.use(signinRouter);
+app.use(credentialsRouter);
 
 app.use(errorHandler);
 

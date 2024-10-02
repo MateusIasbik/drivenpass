@@ -7,7 +7,14 @@ export function conflictError(entity: string) {
 
 export function invalidError(entity: string) {
     return {
-        type: "invalidId",
-        message: `${entity} não existe!`
+        type: "invalid",
+        message: `${entity} não encontrado!`
     };
+}
+
+export function unauthorizedError(entity: string) {
+    return {
+        type: "unauthorized",
+        message: `${entity} incorreta!`
+    }
 }

@@ -1,21 +1,21 @@
 import { UserData } from "../protocols";
 import { conflictError } from "../errors/error";
-import usersRepository from "../repositories/users-repository";
+import signupRepository from "../repositories/signup-repository";
 
 async function insertUser(userData: UserData) {
     
-    let emailExists = await usersRepository.checkEmailExists(userData);
+    let emailExists = await signupRepository.checkEmailExists(userData);
     
     if (emailExists) {
         throw conflictError("E-mail");
     }    
     
-    let result = await usersRepository.insertUser(userData);
+    let result = await signupRepository.insertUser(userData);
     return result;
 }
 
-const usersService = {
+const signupService = {
     insertUser
 }
 
-export default usersService;
+export default signupService;
