@@ -17,9 +17,9 @@ async function insertCredential(credentialData: CredentialData, user: UserPayloa
             password: encryptedPassword,
             userId: user.id
         }
-       });
-    
-       return result;
+    });
+
+    return result;
 }
 
 async function verifyTitle(credentialData: CredentialData, user: UserPayload) {
@@ -30,14 +30,28 @@ async function verifyTitle(credentialData: CredentialData, user: UserPayload) {
         }
     });
 
-    return result !== null; 
+    return result !== null;
+}
+
+async function getCredentials(user: UserPayload) {
+
+    const credentials = await prisma.credential.findMany({
+        where: { userId: user.id }
+    });
+
+    const decryptedCredentials = credentials.map(credential => ({
+        ...credential,
+        password: cryptr.decrypt(credential.password)
+    }));
+
+    return decryptedCredentials;
 }
 
 async function getCredentialById(credentialId: number, user: UserPayload) {
 
     const credentials = await prisma.credential.findMany({
-        where: { 
-            userId: credentialId
+        where: {
+            id: credentialId
         }
     });
 
@@ -49,10 +63,29 @@ async function getCredentialById(credentialId: number, user: UserPayload) {
     return decryptedCredentials;
 }
 
+async function editCredential(credentialId: number, credentialData: CredentialData) {
+
+    const { title, url, username, password } = credentialData;
+
+    const updateData: Partial<CredentialData> = {};
+
+    if (title) updateData.title = title;
+    if (url) updateData.url = url;
+    if (username) updateData.username = username;
+    if (password) updateData.password = cryptr.encrypt(password);
+
+    await prisma.credential.update({
+        where: { id: credentialId },
+        data: updateData
+    });
+}
+
 const credentialRepository = {
     insertCredential,
     verifyTitle,
-    getCredentialById
+    getCredentials,
+    getCredentialById,
+    editCredential
 }
 
 export default credentialRepository;

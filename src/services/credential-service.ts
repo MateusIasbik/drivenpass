@@ -14,6 +14,14 @@ async function insertCredential(credentialData: CredentialData, user: UserPayloa
     return result;
 }
 
+async function getCredentials(user: UserPayload) {
+
+    const result = await credentialRepository.getCredentials(user);
+
+    return result;
+
+}
+
 async function getCredentialById(credentialId: number, user: UserPayload) {
 
     const credentials = await credentialRepository.getCredentialById(credentialId, user);
@@ -26,9 +34,17 @@ async function getCredentialById(credentialId: number, user: UserPayload) {
 
 }
 
+async function editCredential(credentialId: number, credentialData: CredentialData) {
+
+    await credentialRepository.editCredential(credentialId, credentialData);
+
+}
+
 const credentialService = {
     insertCredential,
-    getCredentialById
+    getCredentials,
+    getCredentialById,
+    editCredential
 }
 
 export default credentialService;

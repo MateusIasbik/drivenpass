@@ -17,6 +17,19 @@ async function insertCredential(req: Request, res: Response, next: NextFunction)
     }
 }
 
+async function getCredentials(req: Request, res: Response, next: NextFunction) {
+
+    const user = res.locals.user;
+
+    try {
+        const result = await credentialService.getCredentials(user);
+        res.status(httpStatus.OK).send(result);
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 async function getCredentialById(req: Request, res: Response, next: NextFunction) {
     const credentialId: number = parseInt(req.params.id);
     const user = res.locals.user;
@@ -30,9 +43,24 @@ async function getCredentialById(req: Request, res: Response, next: NextFunction
     }
 }
 
+async function editCredential(req: Request, res: Response, next: NextFunction) {
+    const credentialId: number = parseInt(req.params.id);
+    const credentialData: CredentialData = req.body;
+
+    try {
+        await credentialService.editCredential(credentialId, credentialData);
+        res.sendStatus(httpStatus.NO_CONTENT);
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 const credentialController = {
     insertCredential,
-    getCredentialById
+    getCredentials,
+    getCredentialById,
+    editCredential
 }
 
 export default credentialController;
