@@ -2,8 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { CredentialData } from "../protocols";
 import httpStatus from "http-status";
 import credentialService from "../services/credential-service";
-import { notFoundError } from "../errors/error";
-import { number } from "joi";
 
 async function insertCredential(req: Request, res: Response, next: NextFunction) { 
     const credentialData: CredentialData = req.body;

@@ -17,7 +17,6 @@ async function getCredentials(user: UserPayload) {
     const result = await credentialRepository.getCredentials(user);
 
     return result;
-
 }
 
 async function getCredentialById(credentialId: number, user: UserPayload) {
@@ -28,7 +27,6 @@ async function getCredentialById(credentialId: number, user: UserPayload) {
     }
 
     return credentials;
-
 }
 
 async function editCredential(credentialId: number, credentialData: CredentialData) {    
@@ -36,8 +34,6 @@ async function editCredential(credentialId: number, credentialData: CredentialDa
 }
 
 async function deleteCredentialById(credentialId: number, user: UserPayload) {
-    const userExists = await credentialRepository.getUserIdByUser(credentialId, user);
-
     const credentials = await credentialRepository.getCredentialById(credentialId, user);
 
     if (credentials.length === 0) {
