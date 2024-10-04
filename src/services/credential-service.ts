@@ -20,8 +20,8 @@ async function getCredentials(user: UserPayload) {
 
 }
 
-async function getCredentialById(credentialId: number) {
-    const credentials = await credentialRepository.getCredentialById(credentialId);
+async function getCredentialById(credentialId: number, user: UserPayload) {
+    const credentials = await credentialRepository.getCredentialById(credentialId, user);
 
     if (credentials.length === 0) {
         throw notFoundError("ID");
@@ -31,16 +31,16 @@ async function getCredentialById(credentialId: number) {
 
 }
 
-async function editCredential(credentialId: number, credentialData: CredentialData) {
+async function editCredential(credentialId: number, credentialData: CredentialData) {    
     await credentialRepository.editCredential(credentialId, credentialData);
 }
 
 async function deleteCredentialById(credentialId: number, user: UserPayload) {
     const userExists = await credentialRepository.getUserIdByUser(credentialId, user);
 
-    const credentials = await credentialRepository.getCredentialById(credentialId);
+    const credentials = await credentialRepository.getCredentialById(credentialId, user);
 
-    if (credentials.length === 0 || !userExists) {
+    if (credentials.length === 0) {
         throw notFoundError("ID");
     }
 

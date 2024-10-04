@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { CredentialData } from "../protocols";
 import httpStatus from "http-status";
 import credentialService from "../services/credential-service";
+import { notFoundError } from "../errors/error";
+import { number } from "joi";
 
 async function insertCredential(req: Request, res: Response, next: NextFunction) { 
     const credentialData: CredentialData = req.body;
@@ -30,9 +32,10 @@ async function getCredentials(req: Request, res: Response, next: NextFunction) {
 
 async function getCredentialById(req: Request, res: Response, next: NextFunction) {
     const credentialId: number = parseInt(req.params.id);
+    const user = res.locals.user;
 
     try {
-        const result = await credentialService.getCredentialById(credentialId);
+        const result = await credentialService.getCredentialById(credentialId, user);
         res.status(httpStatus.OK).send(result);
 
     } catch (error) {
@@ -60,6 +63,7 @@ async function deleteCredentialById(req: Request, res: Response, next: NextFunct
     try {
         await credentialService.deleteCredentialById(credentialId, user);
         res.sendStatus(httpStatus.NO_CONTENT);
+        
     } catch (error) {
         next(error)
     }

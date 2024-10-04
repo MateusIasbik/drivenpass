@@ -46,10 +46,11 @@ async function getCredentials(user: UserPayload) {
     return decryptedCredentials;
 }
 
-async function getCredentialById(credentialId: number) {
+async function getCredentialById(credentialId: number, user: UserPayload) {
     const credentials = await prisma.credential.findMany({
         where: {
-            id: credentialId
+            id: credentialId,
+            userId: user.id
         }
     });
 
