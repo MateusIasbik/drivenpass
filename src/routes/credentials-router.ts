@@ -13,5 +13,6 @@ credentialsRouter.post("/credentials", validateSchema(credentialSchema), credent
 credentialsRouter.get("/credentials/", credentialController.getCredentials);
 credentialsRouter.get("/credentials/:id", credentialController.getCredentialById);
 credentialsRouter.put("/credentials/:id", validateSchema(credentialEditSchema), credentialController.editCredential);
+credentialsRouter.delete("/credentials/:id", credentialController.deleteCredentialById);
 
 export default credentialsRouter;

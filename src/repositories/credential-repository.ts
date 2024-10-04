@@ -47,7 +47,7 @@ async function getCredentials(user: UserPayload) {
     return decryptedCredentials;
 }
 
-async function getCredentialById(credentialId: number, user: UserPayload) {
+async function getCredentialById(credentialId: number) {
 
     const credentials = await prisma.credential.findMany({
         where: {
@@ -80,12 +80,20 @@ async function editCredential(credentialId: number, credentialData: CredentialDa
     });
 }
 
+async function deleteCredentialById(credentialId: number) {
+
+    await prisma.credential.delete({
+        where: { id: credentialId }
+    });
+}
+
 const credentialRepository = {
     insertCredential,
     verifyTitle,
     getCredentials,
     getCredentialById,
-    editCredential
+    editCredential,
+    deleteCredentialById
 }
 
 export default credentialRepository;

@@ -32,10 +32,9 @@ async function getCredentials(req: Request, res: Response, next: NextFunction) {
 
 async function getCredentialById(req: Request, res: Response, next: NextFunction) {
     const credentialId: number = parseInt(req.params.id);
-    const user = res.locals.user;
 
     try {
-        const result = await credentialService.getCredentialById(credentialId, user);
+        const result = await credentialService.getCredentialById(credentialId);
         res.status(httpStatus.OK).send(result);
 
     } catch (error) {
@@ -56,11 +55,23 @@ async function editCredential(req: Request, res: Response, next: NextFunction) {
     }
 }
 
+async function deleteCredentialById(req: Request, res: Response, next: NextFunction) {
+    const credentialId: number = parseInt(req.params.id);
+
+    try {
+        await credentialService.deleteCredentialById(credentialId);
+        res.sendStatus(httpStatus.NO_CONTENT);
+    } catch (error) {
+        next(error)
+    }
+}
+
 const credentialController = {
     insertCredential,
     getCredentials,
     getCredentialById,
-    editCredential
+    editCredential,
+    deleteCredentialById
 }
 
 export default credentialController;
