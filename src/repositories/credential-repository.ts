@@ -34,7 +34,6 @@ async function verifyTitle(credentialData: CredentialData, user: UserPayload) {
 }
 
 async function getCredentials(user: UserPayload) {
-
     const credentials = await prisma.credential.findMany({
         where: { userId: user.id }
     });
@@ -48,7 +47,6 @@ async function getCredentials(user: UserPayload) {
 }
 
 async function getCredentialById(credentialId: number) {
-
     const credentials = await prisma.credential.findMany({
         where: {
             id: credentialId
@@ -64,7 +62,6 @@ async function getCredentialById(credentialId: number) {
 }
 
 async function editCredential(credentialId: number, credentialData: CredentialData) {
-
     const { title, url, username, password } = credentialData;
 
     const updateData: Partial<CredentialData> = {};
@@ -81,7 +78,6 @@ async function editCredential(credentialId: number, credentialData: CredentialDa
 }
 
 async function deleteCredentialById(credentialId: number, user: UserPayload) {
-
     await prisma.credential.delete({
         where: { 
             id: credentialId,
@@ -91,7 +87,6 @@ async function deleteCredentialById(credentialId: number, user: UserPayload) {
 }
 
 async function getUserIdByUser(credentialId: number, user: UserPayload) {
-
     const result = await prisma.credential.findFirst({
         where: { 
             id: credentialId,

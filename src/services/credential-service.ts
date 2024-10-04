@@ -3,7 +3,6 @@ import { conflictError, invalidError, notFoundError, unauthorizedError } from ".
 import credentialRepository from "../repositories/credential-repository";
 
 async function insertCredential(credentialData: CredentialData, user: UserPayload) {
-
     const titleExist = await credentialRepository.verifyTitle(credentialData, user);
 
     if (titleExist) {
@@ -15,7 +14,6 @@ async function insertCredential(credentialData: CredentialData, user: UserPayloa
 }
 
 async function getCredentials(user: UserPayload) {
-
     const result = await credentialRepository.getCredentials(user);
 
     return result;
@@ -23,7 +21,6 @@ async function getCredentials(user: UserPayload) {
 }
 
 async function getCredentialById(credentialId: number) {
-
     const credentials = await credentialRepository.getCredentialById(credentialId);
 
     if (credentials.length === 0) {
@@ -35,13 +32,10 @@ async function getCredentialById(credentialId: number) {
 }
 
 async function editCredential(credentialId: number, credentialData: CredentialData) {
-
     await credentialRepository.editCredential(credentialId, credentialData);
-
 }
 
 async function deleteCredentialById(credentialId: number, user: UserPayload) {
-
     const userExists = await credentialRepository.getUserIdByUser(credentialId, user);
 
     const credentials = await credentialRepository.getCredentialById(credentialId);
