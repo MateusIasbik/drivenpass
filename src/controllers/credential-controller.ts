@@ -4,10 +4,9 @@ import httpStatus from "http-status";
 import credentialService from "../services/credential-service";
 
 async function insertCredential(req: Request, res: Response, next: NextFunction) {
-    const credentialData: CredentialData = req.body;
     
+    const credentialData: CredentialData = req.body;
     const user = res.locals.user;
-    console.log(user);
     
     try {
         await credentialService.insertCredential(credentialData, user);
@@ -18,8 +17,22 @@ async function insertCredential(req: Request, res: Response, next: NextFunction)
     }
 }
 
+async function getCredentialById(req: Request, res: Response, next: NextFunction) {
+    const credentialId: number = parseInt(req.params.id);
+    const user = res.locals.user;
+
+    try {
+        const result = await credentialService.getCredentialById(credentialId, user);
+        res.status(httpStatus.OK).send(result);
+
+    } catch (error) {
+        next(error);
+    }
+}
+
 const credentialController = {
-    insertCredential
+    insertCredential,
+    getCredentialById
 }
 
 export default credentialController;

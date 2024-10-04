@@ -1,5 +1,5 @@
 import { CredentialData, UserPayload } from "../protocols";
-import { conflictError, invalidError, unauthorizedError } from "../errors/error";
+import { conflictError, invalidError, notFoundError, unauthorizedError } from "../errors/error";
 import credentialRepository from "../repositories/credential-repository";
 
 async function insertCredential(credentialData: CredentialData, user: UserPayload) {
@@ -14,8 +14,21 @@ async function insertCredential(credentialData: CredentialData, user: UserPayloa
     return result;
 }
 
+async function getCredentialById(credentialId: number, user: UserPayload) {
+
+    const credentials = await credentialRepository.getCredentialById(credentialId, user);
+
+    if (credentials.length === 0) {
+        throw notFoundError("ID");
+    }
+
+    return credentials;
+
+}
+
 const credentialService = {
-    insertCredential
+    insertCredential,
+    getCredentialById
 }
 
 export default credentialService;

@@ -18,3 +18,10 @@ export function unauthorizedError(entity: string) {
         message: `${entity} incorreta!`
     }
 }
+
+export function notFoundError(entity: string) {
+    return {
+        type: "notFound",
+        message: `${entity} não encontrado!`
+    }
+}

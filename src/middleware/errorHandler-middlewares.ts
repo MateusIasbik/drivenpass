@@ -19,5 +19,9 @@ export default function errorHandler(err: CustomError, req: Request, res: Respon
         return res.status(httpStatus.UNAUTHORIZED).send(err.message);
     }
 
+    if (err.type === "notFound") {
+        return res.status(httpStatus.NOT_FOUND).send(err.message);
+    }
+
     res.status(httpStatus.INTERNAL_SERVER_ERROR).send(err.message);
 }
