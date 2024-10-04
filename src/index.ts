@@ -3,6 +3,7 @@ import httpStatus from "http-status";
 import errorHandler from "./middleware/errorHandler-middlewares";
 import signupRouter from "./routes/signup-router";
 import signinRouter from "./routes/signin-router";
+import './protocols/index'; 
 import credentialsRouter from "./routes/credentials-router";
 
 const app = express();
@@ -18,5 +19,5 @@ app.use(credentialsRouter);
 
 app.use(errorHandler);
 
-const port = process.env.PORT || 5550;
+const port = process.env.PORT || 5450;
 app.listen(port, () => console.log("Server is up."));

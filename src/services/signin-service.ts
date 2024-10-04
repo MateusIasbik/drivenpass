@@ -4,7 +4,7 @@ import { invalidError, unauthorizedError } from "../errors/error";
 import signinRepository from "../repositories/signin-repository";
 import jwt from "jsonwebtoken";
 
-dotenv.config();
+// dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
 
 async function loginUser(userData: UserData) {
@@ -23,8 +23,10 @@ async function loginUser(userData: UserData) {
     
     const user = await signinRepository.verifyUser(userData);
 
-    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: 86400 });
-
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+    
+    // const decoded = jwt.decode(token);
+    // console.log(decoded);
     return token;
 }
 

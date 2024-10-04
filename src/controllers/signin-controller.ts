@@ -8,7 +8,6 @@ async function loginUser(req: Request, res: Response, next: NextFunction) {
     
     try {
         const token = await signinService.loginUser(userData);
-        console.log(token);
         res.status(httpStatus.OK).send(token);
 
     } catch (error) {

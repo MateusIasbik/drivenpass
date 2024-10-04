@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 async function verifyPassword(userData: UserData) {
 
     const user = await verifyUser(userData);
-
     if(!user) {
         return false;
     }
