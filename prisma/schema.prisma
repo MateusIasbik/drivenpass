@@ -12,7 +12,7 @@ model User {
   name        String
   email       String       @unique
   password    String
-  credentials Credential[]
+  credentials Credential[] 
 
   @@map("users")
 }
@@ -24,7 +24,7 @@ model Credential {
   username String
   password String
   userId   Int
-  user     User   @relation(fields: [userId], references: [id])
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, title])
   @@map("credentials")

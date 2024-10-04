@@ -3,8 +3,7 @@ import { CredentialData } from "../protocols";
 import httpStatus from "http-status";
 import credentialService from "../services/credential-service";
 
-async function insertCredential(req: Request, res: Response, next: NextFunction) {
-    
+async function insertCredential(req: Request, res: Response, next: NextFunction) { 
     const credentialData: CredentialData = req.body;
     const user = res.locals.user;
     
@@ -18,7 +17,6 @@ async function insertCredential(req: Request, res: Response, next: NextFunction)
 }
 
 async function getCredentials(req: Request, res: Response, next: NextFunction) {
-
     const user = res.locals.user;
 
     try {
@@ -57,9 +55,10 @@ async function editCredential(req: Request, res: Response, next: NextFunction) {
 
 async function deleteCredentialById(req: Request, res: Response, next: NextFunction) {
     const credentialId: number = parseInt(req.params.id);
+    const user = res.locals.user;
 
     try {
-        await credentialService.deleteCredentialById(credentialId);
+        await credentialService.deleteCredentialById(credentialId, user);
         res.sendStatus(httpStatus.NO_CONTENT);
     } catch (error) {
         next(error)

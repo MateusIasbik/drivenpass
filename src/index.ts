@@ -3,8 +3,8 @@ import httpStatus from "http-status";
 import errorHandler from "./middleware/errorHandler-middlewares";
 import signupRouter from "./routes/signup-router";
 import signinRouter from "./routes/signin-router";
-import './protocols/index'; 
 import credentialsRouter from "./routes/credentials-router";
+import eraseRouter from "./routes/erase-router";
 
 const app = express();
 app.use(json());
@@ -16,6 +16,7 @@ app.get("/health", (req: Request, res: Response) => {
 app.use(signupRouter);
 app.use(signinRouter);
 app.use(credentialsRouter);
+app.use(eraseRouter);
 
 app.use(errorHandler);
 

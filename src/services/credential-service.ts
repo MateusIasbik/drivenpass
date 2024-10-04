@@ -1,4 +1,4 @@
-import { CredentialData, UserPayload } from "../protocols";
+import { CredentialData, UserData, UserPayload } from "../protocols";
 import { conflictError, invalidError, notFoundError, unauthorizedError } from "../errors/error";
 import credentialRepository from "../repositories/credential-repository";
 
@@ -40,15 +40,17 @@ async function editCredential(credentialId: number, credentialData: CredentialDa
 
 }
 
-async function deleteCredentialById(credentialId: number) {
+async function deleteCredentialById(credentialId: number, user: UserPayload) {
+
+    const userExists = await credentialRepository.getUserIdByUser(credentialId, user);
 
     const credentials = await credentialRepository.getCredentialById(credentialId);
 
-    if (credentials.length === 0) {
+    if (credentials.length === 0 || !userExists) {
         throw notFoundError("ID");
     }
 
-    await credentialRepository.deleteCredentialById(credentialId);
+    await credentialRepository.deleteCredentialById(credentialId, user);
 }
 
 const credentialService = {

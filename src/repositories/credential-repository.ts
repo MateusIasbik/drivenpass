@@ -80,11 +80,27 @@ async function editCredential(credentialId: number, credentialData: CredentialDa
     });
 }
 
-async function deleteCredentialById(credentialId: number) {
+async function deleteCredentialById(credentialId: number, user: UserPayload) {
 
     await prisma.credential.delete({
-        where: { id: credentialId }
+        where: { 
+            id: credentialId,
+            userId: user.id
+        }
     });
+}
+
+async function getUserIdByUser(credentialId: number, user: UserPayload) {
+
+    const result = await prisma.credential.findFirst({
+        where: { 
+            id: credentialId,
+            userId: user.id
+        }
+    });
+
+    return result !== null;
+ 
 }
 
 const credentialRepository = {
@@ -93,6 +109,7 @@ const credentialRepository = {
     getCredentials,
     getCredentialById,
     editCredential,
+    getUserIdByUser,
     deleteCredentialById
 }
 
